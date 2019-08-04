@@ -44,11 +44,11 @@ keys.addEventListener('click', e => {
 		else if (action === 'clear') {
 			calculator.dataset.previousKeyType = 'clear'
 			display.textContent = 0;
+			decimalUsed = false;
 		}
 		else if (action === 'calculate') {
 			tokens = tokeniseStringExpression(display.textContent);
 			postFix = infixToPostfix(tokens);
-			console.log(postFix);
 			display.textContent = calculate(postFix);
 		}
 	}
@@ -89,25 +89,27 @@ function calculate(postFixExp) {
 
 	for (i = 0; i < postFixExp.length; i++) {
 		if (isNumeric(postFixExp[i])) {
-			postFixExp[i] = parseInt(postFixExp[i])
+			postFixExp[i] = parseFloat(postFixExp[i])
 			console.log("Converting string num to integer...")
 		}
 
 		if (postFixExp[i] == '+') {
 			console.log("Adding...")
-			stack.push(parseInt(stack.pop()) + parseInt(stack.pop()));
+			stack.push(parseFloat(stack.pop()) + parseFloat(stack.pop()));
 		}
 		else if (postFixExp[i] == '-') {
 			console.log("Subtracting...")
-			stack.push(-parseInt(stack.pop()) + parseInt(stack.pop()));
+			stack.push(-parseFloat(stack.pop()) + parseFloat(stack.pop()));
 		}
 		else if (postFixExp[i] == '×') {
 			console.log("Multiplying...")
-			stack.push(parseInt(stack.pop()) * parseInt(stack.pop()));
+			stack.push(parseFloat(stack.pop()) * parseFloat(stack.pop()));
 		}
 		else if (postFixExp[i] == '÷') {
 			console.log("Dividing...")
-			stack.push((parseInt(stack.pop()) / parseInt(stack.pop())).toFixed(2));
+			var operand1 = parseFloat(stack.pop());
+			var operand2 = parseFloat(stack.pop());
+			stack.push((operand2 / operand1).toFixed(2));
 		}
 		else {
 			stack.push(postFixExp[i]);
