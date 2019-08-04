@@ -1,0 +1,14 @@
+{
+    "name": "Calculator",
+    "version": "0.1.0",
+    "main": "./main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron-prebuilt": "^1.4.13"
+    },
+    "dependencies": {
+        "jquery": "^3.4.1"
+    }
+}
