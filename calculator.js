@@ -11,6 +11,8 @@ keys.addEventListener('click', e => {
 		const keyContent = key.textContent;
 		const displayedSum = display.textContent;
 
+		console.log(calculator.dataset.previousKeyType)
+
 		if (!action) { // handle numbers being entered
 			if (displayedSum === '0') {
 				display.textContent = keyContent;
@@ -41,47 +43,79 @@ keys.addEventListener('click', e => {
 				decimalUsed = true;
 			}
 		}
+		else if (action === 'open-bracket') {
+			if (display.textContent == '0') {
+				display.textContent = '(';
+				calculator.dataset.previousKeyType = '('
+			}
+			else if (calculator.dataset.previousKeyType == 'operator' ||
+					 calculator.dataset.previousKeyType == '(') {
+				display.textContent += '(';
+				calculator.dataset.previousKeyType = '('
+			}
+		}
+		else if (action === 'close-bracket') {
+			if (calculator.dataset.previousKeyType == 'number' ||
+				calculator.dataset.previousKeyType == ')') {
+				display.textContent += ')';
+				calculator.dataset.previousKeyType = ')'
+			}
+		}
 		else if (action === 'clear') {
 			calculator.dataset.previousKeyType = 'clear'
 			display.textContent = 0;
 			decimalUsed = false;
 		}
-		else if (action === 'calculate') {
-			tokens = tokeniseStringExpression(display.textContent);
-			postFix = infixToPostfix(tokens);
-			display.textContent = calculate(postFix);
+		else if (action === 'calculate') { // add check for equal bracket counts
+			var leftBracketCount = (display.textContent.match(/\(/g) || []).length;
+			var rightBracketCount = (display.textContent.match(/\)/g) || []).length;
+
+			if (leftBracketCount == rightBracketCount) {
+				tokens = tokeniseStringExpression(display.textContent);
+				postFix = infixToPostfix(tokens);
+				display.textContent = calculate(postFix);
+			}
 		}
 	}
 })
 
 function infixToPostfix(infix) {
-	var postFixTokens = []
-	var stack = []
 	var infixTokens = []
+	var outputQueue = []
+	var operatorStack = []
 
 	for (i = 0; i < infix.length; i++) {
 		if (isNumeric(infix[i])) {
-			postFixTokens.push(infix[i]);
+			outputQueue.push(infix[i]);
 		}
-		else if (isOperator(infix[i]) && stack.length == 0) {
-			stack.push(infix[i]);
+		else if (isOperator(infix[i]) && operatorStack.length == 0) {
+			operatorStack.push(infix[i]);
 		}
-		else if (isOperator(infix[i]) && stack.length != 0) {
-			while (stack.length != 0) {
-				if (getPrecedence(stack[stack.length-1]) > getPrecedence(infix[i])) {
-					postFixTokens.push(stack.pop());
+		else if (isOperator(infix[i]) && operatorStack.length != 0) {
+			while (operatorStack.length != 0) {
+				if (getPrecedence(operatorStack[operatorStack.length-1]) > getPrecedence(infix[i])) {
+					outputQueue.push(operatorStack.pop());
 				}
 				else {
-					stack.push(infix[i]);
+					operatorStack.push(infix[i]);
 					break;
 				}
 			}
 		}
+		else if (infix[i] == '(') {
+			operatorStack.push(infix[i]);
+		}
+		else if (infix[i] ==')') {
+			while (operatorStack[operatorStack.length-1] != '(') {
+				outputQueue.push(operatorStack.pop());
+			}
+			operatorStack.pop()
+		}
 	}
-	while (stack.length != 0) {
-		postFixTokens.push(stack.pop());
+	while (operatorStack.length != 0) {
+		outputQueue.push(operatorStack.pop());
 	}
-	return postFixTokens;
+	return outputQueue;
 }
 
 function calculate(postFixExp) {
@@ -143,14 +177,21 @@ function isNumeric(input) {
 	return !isNaN(input);
 }
 
+function isBracket(input) {
+	return (input == '(' || input == ')');
+}
+
 function tokeniseStringExpression(expression) {
 	var tokens = [];
 	var index = 0;
 
 	while (index < expression.length) {
 		var startingIndex = index;
-		while (!isOperator(expression[index]) && (index < expression.length)) {
-			index++;
+		while (!isOperator(expression[index]) &&
+			  (index < expression.length) &&
+			  expression[index] != '(' &&
+			  expression[index] != ')') {
+				index++;
 		}
 		var endingIndex = index;
 	
@@ -158,15 +199,21 @@ function tokeniseStringExpression(expression) {
 		for (i = startingIndex; i < endingIndex; i++) {
 			currentToken += expression[i];
 		}
-		tokens.push(currentToken);
-
+		if (currentToken != "") {
+			tokens.push(currentToken);
+		}
 		if (isOperator(expression[index])) {
+			tokens.push(expression[index]);
+		}
+		else if (isBracket(expression[index])) {
 			tokens.push(expression[index]);
 		}
 		else {
 			console.log(tokens);
+			tokens = tokens.filter(Boolean);
 			return tokens;
 		}
 		index++;
 	}
+	return tokens;
 }
