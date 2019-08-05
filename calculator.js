@@ -59,6 +59,17 @@ keys.addEventListener('click', e => {
 					}
 				break;
 
+				case 'open-bracket':
+					if (display.textContent == '0') {
+						display.textContent = '(';
+						calculator.dataset.previousKeyType = '('
+					}
+				else if (calculator.dataset.previousKeyType == 'operator' ||
+						 calculator.dataset.previousKeyType == '(') {
+							display.textContent += '(';
+							calculator.dataset.previousKeyType = '(';
+				}
+
 				case 'close-bracket':
 					if (calculator.dataset.previousKeyType == 'number' ||
 						calculator.dataset.previousKeyType == ')') {
