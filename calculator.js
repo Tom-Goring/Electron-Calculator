@@ -20,60 +20,74 @@ keys.addEventListener('click', e => {
 				display.textContent = displayedSum + keyContent;
 			}
 			calculator.dataset.previousKeyType = 'number';
-		} 
-		else if ( // handle an operator being pressed
-			action === 'add' ||
-			action === 'subtract' ||
-			action === 'multiply' ||
-			action === 'divide'
-		) {
-			if (calculator.dataset.previousKeyType !== 'operator') { // check if last thing entered was an operator
-				key.classList.add('is-depressed');
-				calculator.dataset.previousKeyType = 'operator';
-				display.textContent = displayedSum + keyContent;
-				decimalUsed = false
-			}
-		}
-		else if (action === 'decimal' && 
-		calculator.dataset.previousKeyType !== 'operator' && 
-		calculator.dataset.previousKeyType !== '.') {
-			if (!decimalUsed) { // we can't have two decimals in a single number
-								// are numbers, and numbers = operators + 1
-				display.textContent = displayedSum + '.';
-				decimalUsed = true;
-			}
-		}
-		else if (action === 'open-bracket') {
-			if (display.textContent == '0') {
-				display.textContent = '(';
-				calculator.dataset.previousKeyType = '('
-			}
-			else if (calculator.dataset.previousKeyType == 'operator' ||
-					 calculator.dataset.previousKeyType == '(') {
-				display.textContent += '(';
-				calculator.dataset.previousKeyType = '('
-			}
-		}
-		else if (action === 'close-bracket') {
-			if (calculator.dataset.previousKeyType == 'number' ||
-				calculator.dataset.previousKeyType == ')') {
-				display.textContent += ')';
-				calculator.dataset.previousKeyType = ')'
-			}
-		}
-		else if (action === 'clear') {
-			calculator.dataset.previousKeyType = 'clear'
-			display.textContent = 0;
-			decimalUsed = false;
-		}
-		else if (action === 'calculate') { // add check for equal bracket counts
-			var leftBracketCount = (display.textContent.match(/\(/g) || []).length;
-			var rightBracketCount = (display.textContent.match(/\)/g) || []).length;
+		} else {
+			switch (action) {
 
-			if (leftBracketCount == rightBracketCount) {
-				tokens = tokeniseStringExpression(display.textContent);
-				postFix = infixToPostfix(tokens);
-				display.textContent = calculate(postFix);
+				case 'add':
+				case 'subtract':
+				case 'multiply':
+				case 'divide':
+					if (calculator.dataset.previousKeyType !== 'operator') { // check if last thing entered was an operator
+						key.classList.add('is-depressed');
+						calculator.dataset.previousKeyType = 'operator';
+						display.textContent = displayedSum + keyContent;
+						decimalUsed = false
+					}
+				break;
+
+				case 'decimal':
+					if (
+					calculator.dataset.previousKeyType !== 'operator' && 
+					calculator.dataset.previousKeyType !== '.') {
+						if (!decimalUsed) { // we can't have two decimals in a single number
+											// are numbers, and numbers = operators + 1
+							display.textContent = displayedSum + '.';
+							decimalUsed = true;
+						}
+					}
+				break;
+
+				case 'decimal':
+					if (display.textContent == '0') {
+						display.textContent = '(';
+						calculator.dataset.previousKeyType = '('
+					}
+					else if (calculator.dataset.previousKeyType == 'operator' ||
+							 calculator.dataset.previousKeyType == '(') {
+								display.textContent += '(';
+								calculator.dataset.previousKeyType = '('
+					}
+				break;
+
+				case 'close-bracket':
+					if (calculator.dataset.previousKeyType == 'number' ||
+						calculator.dataset.previousKeyType == ')') {
+							display.textContent += ')';
+							calculator.dataset.previousKeyType = ')'
+						}
+				break;
+
+				case 'clear':
+						calculator.dataset.previousKeyType = 'clear'
+						display.textContent = 0;
+						decimalUsed = false;
+				break;
+				case 'delete-prev':
+
+					if (display.textContent != '0') {
+						display.textContent = display.textContent.slice(0, -1);
+					}
+				break;
+				case 'calculate':
+						var leftBracketCount = (display.textContent.match(/\(/g) || []).length;
+						var rightBracketCount = (display.textContent.match(/\)/g) || []).length;
+			
+						if (leftBracketCount == rightBracketCount) {
+							tokens = tokeniseStringExpression(display.textContent);
+							postFix = infixToPostfix(tokens);
+							display.textContent = calculate(postFix);
+						}
+				break;
 			}
 		}
 	}
