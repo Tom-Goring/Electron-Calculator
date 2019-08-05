@@ -4,6 +4,10 @@ const path = require('path')
 
 let win
 
+app.commandLine.appendSwitch(
+	'enable-experimental-web-platform-features'
+);
+
 function createWindow() {
    win = new BrowserWindow({width: 800, height: 600})
    win.loadURL(url.format ({
