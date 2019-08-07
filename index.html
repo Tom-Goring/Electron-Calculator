@@ -2,7 +2,7 @@
 <html>
    <head>
       <meta charset="UTF-8">
-	  <title>title</title>
+	  <title>Calculatom</title>
 	  <link rel="stylesheet" type="text/css" href="calculator.css" media="screen" />
 	  <script type = "text/javascript" src = "calculator.js" defer></script>
    </head>
@@ -10,10 +10,10 @@
     	<div class="calc">
         	<div class="display">0</div> 
         	<div class = keys>
-				<button class = "key--operator" data-action="add">+</button>
-				<button class = "key--operator" data-action="subtract">-</button>
-				<button class = "key--operator" data-action="multiply">&times;</button>
-				<button class = "key--operator" data-action="divide">÷</button>
+				<button class="plus" data-action="add">+</button>
+				<button class="minus" data-action="subtract">-</button>
+				<button class="times" data-action="multiply">&times;</button>
+				<button class="divide" data-action="divide">÷</button>
 				<button class="one"  >1</button>
 				<button class="two"  >2</button>
 				<button class="three">3</button>
@@ -24,12 +24,14 @@
 				<button class="eight">8</button>
 				<button class="nine" >9</button>
 				<button class="zero" >0</button>
-				<button class = "key--operator" data-action="open-bracket">(</button>
-				<button class = "key--operator" data-action="close-bracket">)</button>
-				<button class = "key--operator" data-action="decimal">.</button>
-				<button class = "key--operator" data-action="delete-prev">CE</button>
+				<div class="brackets">
+					<button class="open-bracket" data-action="open-bracket">(
+					</button><button class="close-bracket" data-action="close-bracket">)</button>
+				</div>
+				<button class="decimal" data-action="decimal">.</button>
+				<button class="delete-prev" data-action="delete-prev">CE</button>
 				<button class="clear" data-action="clear">AC</button>
-				<button class="key-equal" data-action="calculate">=</button>
+				<button class="equals" data-action="calculate">=</button>
         	</div>
 		</div>
    </body>

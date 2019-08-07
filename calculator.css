@@ -1,78 +1,158 @@
-.calculator {
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 400px;
-}
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
 
-.display {
-	width: 90%%;
-	font-size: 5rem;
-	height: 80px;
-	border: none;
-	background-color: #252525;
-	color: #fff;
-	text-align: right;
-	padding-right: 20px;
-	padding-left: 10px;
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
 }
-
-button {
-	height: 60px;
-	background-color: #fff;
-	border-radius: 3px;
-	border: 1px solid #c4c4c4;
-	background-color: transparent;
-	font-size: 2rem;
-	color: #333;
-	background-image: linear-gradient(to bottom,transparent,transparent 50%,rgba(0,0,0,.04));
-	box-shadow: inset 0 0 0 1px rgba(255,255,255,.05), inset 0 1px 0 0 rgba(255,255,255,.45), inset 0 -1px 0 0 rgba(255,255,255,.15), 0 1px 0 0 rgba(255,255,255,.15);
-	text-shadow: 0 1px rgba(255,255,255,.4);
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
 }
-  
-button:hover {
-	background-color: #eaeaea;
+body {
+	line-height: 1;
 }
-  
-.key--operator {
-	color: #337cac;
+ol, ul {
+	list-style: none;
 }
-  
-.clear {
-	background-color: #f0595f;
-	border-color: #b0353a;
-	color: #fff;
+blockquote, q {
+	quotes: none;
 }
-  
-.clear:hover {
-	background-color: #f17377;
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
 }
-  
-.key-equal {
-	background-color: #2e86c0;
-	border-color: #337cac;
-	color: #fff;
-}
-  
-.key-equal:hover {
-	background-color: #4e9ed4;
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 .keys {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-gap: 20px;
-	padding: 20px;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+	/*grid-gap: 0.3em;*/
 }
 
-.equal-sign {
-	background-color: #2e86c0;
-	border-color: #337cac;
-	color: #fff;
+.zero {
+	grid-column: 2;
+	grid-row: 5;
+}
+
+.one {
+	grid-column: 1;
+	grid-row: 4;
+}
+
+.two {
+	grid-column: 2;
+	grid-row: 4;
+}
+
+.three {
+	grid-column: 3;
+	grid-row: 4;
+}
+
+.four {
+	grid-column: 1;
+	grid-row: 3;
+}
+
+.five {
+	grid-column: 2;
+	grid-row: 3;
+}
+
+.six {
+	grid-column: 3;
+	grid-row: 3;
+}
+
+.seven {
+	grid-column: 1;
+	grid-row-start: 2;
+}
+
+.eight {
+	grid-column: 2;
+	grid-row: 2;
+}
+
+.nine {
+	grid-column: 3;
+	grid-row: 2;
+}
+
+.divide {
+	grid-column: 1;
+	grid-row: 1;
+}
+
+.plus {
+	grid-column: 2;
+	grid-row: 1;
+}
+
+.minus {
+	grid-column: 3;
+	grid-row: 1;
+}
+
+.times {
+	grid-column: 4;
+	grid-row: 1;
+}
+
+.equals {
+	width: 100%;
 	height: 100%;
-	grid-row: 2 / 6;
-	grid-column: 4 / 5;
+	display: block;
+	grid-column: 4;
+	grid-row: 4 / 6;
+}
+
+.open-bracket {
+	width: 50%;
+	display: inline-block;
+}
+
+.close-bracket {
+	width: 50%;
+	display: inline-block;
+}
+
+.decimal {
+	grid-column: 1;
+	grid-row: 5;
+}
+
+button {
+	background: rgba(255, 255, 255, 0.5);
+	border: 1px solid rgba(161, 161, 161, 0.5); /* black border */
+	padding: 20px;
+	color: rgb(0, 0, 0);
+	border-radius: 0px; /* rounded corners */
+	font-size: 22px; /* larger fonts */
+	cursor: pointer; /* make it look clickable */
 }
