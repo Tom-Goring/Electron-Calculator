@@ -9,7 +9,10 @@ app.commandLine.appendSwitch(
 );
 
 function createWindow() {
-   win = new BrowserWindow({width: 800, height: 600})
+   win = new BrowserWindow({width: 429, height: 395})
+   win.setMenuBarVisibility(false);
+
+   win.setResizable(false);
    win.loadURL(url.format ({
       pathname: path.join(__dirname, 'index.html'),
       protocol: 'file:',
@@ -18,4 +21,3 @@ function createWindow() {
 }
 
 app.on('ready', createWindow)
-
