@@ -14,7 +14,7 @@ keys.addEventListener('click', e => {
 		console.log(calculator.dataset.previousKeyType)
 
 		if (!action) { // handle numbers being entered
-			if (displayedSum === '0') {
+			if (displayedSum === '0' || displayedSum == 'NaN') {
 				display.textContent = keyContent;
 			} else {
 				display.textContent = displayedSum + keyContent;
@@ -98,6 +98,12 @@ keys.addEventListener('click', e => {
 							tokens = tokeniseStringExpression(display.textContent);
 							postFix = infixToPostfix(tokens);
 							display.textContent = calculate(postFix);
+							if ((display.textContent.match(/./g) || []).length) {
+								decimalUsed = true;
+							}
+						}
+						else {
+							display.textContent = "NaN";
 						}
 				break;
 			}
