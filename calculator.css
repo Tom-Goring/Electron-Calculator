@@ -55,7 +55,7 @@ table {
 	justify-content: flex-end;
 	color: white;
 	padding: 0.3em;
-	font-size: 2em;
+	font-size: 40px; /* larger fonts */
 }
 
 .keys {
@@ -115,18 +115,18 @@ table {
 }
 
 .divide {
-	grid-column: 1;
-	grid-row: 1;
+	grid-column: 4;
+	grid-row: 2;
 }
 
 .plus {
-	grid-column: 2;
-	grid-row: 1;
+	grid-column: 4;
+	grid-row: 4;
 }
 
 .minus {
-	grid-column: 3;
-	grid-row: 1;
+	grid-column: 4;
+	grid-row: 3;
 }
 
 .times {
@@ -138,8 +138,8 @@ table {
 	width: 100%;
 	height: 100%;
 	display: block;
-	grid-column: 4;
-	grid-row: 4 / 6;
+	grid-column: 3 / 5;
+	/*grid-row: 4 / 6;*/
 }
 
 .open-bracket {

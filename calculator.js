@@ -69,6 +69,7 @@ keys.addEventListener('click', e => {
 							display.textContent += '(';
 							calculator.dataset.previousKeyType = '(';
 				}
+				break;
 
 				case 'close-bracket':
 					if (calculator.dataset.previousKeyType == 'number' ||
